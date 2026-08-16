@@ -29,9 +29,12 @@ const MENU_ITEMS = [
         path: ROUTES.CHECKINS,
     },
     {
+        label: "Equipamentos",
+        path: ROUTES.EQUIPMENTS,
+    },
+    {
         label: "Usuários",
         path: ROUTES.USERS,
-        roles: ["ADMIN"],
     },
 ];
 
@@ -44,12 +47,16 @@ function Sidebar() {
         logout,
     } = useAuthContext();
 
+
+
     const menu = MENU_ITEMS.filter((item) => {
         if (!item.roles) {
             return true;
         }
 
-        return item.roles.includes(user?.role);
+        const userRole = user?.tipo?.toUpperCase();
+
+        return item.roles.includes(userRole);
     });
 
     return (
@@ -62,9 +69,9 @@ function Sidebar() {
             </div>
 
             <div className="sidebar-user">
-                <strong>{user?.name ?? "Usuário"}</strong>
+                <strong>{user?.nome ?? "Usuário"}</strong>
 
-                <span>{user?.role ?? ""}</span>
+                <span>{user?.tipo ?? ""}</span>
             </div>
 
             <nav

@@ -9,5 +9,6 @@ export const ROUTES = Object.freeze({
     LOGIN: "/login",
     DASHBOARD: "/dashboard",
     USERS: "/users",
+    EQUIPMENTS: "/equipamentos",
     CHECKINS: "/checkins",
 });

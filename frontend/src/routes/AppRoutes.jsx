@@ -22,6 +22,7 @@ import { ROUTES } from "@/constants/routes";
 
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Users from "@/pages/Users/Users";
+import Equipments from "@/pages/Equipments/Equipments";
 import Checkins from "@/pages/Checkins/Checkins";
 import Login from "@/pages/Login/Login";
 
@@ -29,6 +30,10 @@ function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
+
+                {/* =========================================================
+                    Rota inicial
+                ========================================================= */}
 
                 <Route
                     path={ROUTES.ROOT}
@@ -40,23 +45,44 @@ function AppRoutes() {
                     }
                 />
 
+                {/* =========================================================
+                    Rotas públicas
+                ========================================================= */}
+
                 <Route
                     path={ROUTES.LOGIN}
                     element={<Login />}
                 />
 
+                {/* =========================================================
+                    Rotas protegidas
+                ========================================================= */}
+
                 <Route element={<ProtectedRoute />}>
                     <Route element={<MainLayout />}>
+
+                        {/* Dashboard */}
 
                         <Route
                             path={ROUTES.DASHBOARD}
                             element={<Dashboard />}
                         />
 
+                        {/* Usuários */}
+
                         <Route
                             path={ROUTES.USERS}
                             element={<Users />}
                         />
+
+                        {/* Equipamentos */}
+
+                        <Route
+                            path={ROUTES.EQUIPMENTS}
+                            element={<Equipments />}
+                        />
+
+                        {/* Check-ins */}
 
                         <Route
                             path={ROUTES.CHECKINS}
@@ -65,6 +91,10 @@ function AppRoutes() {
 
                     </Route>
                 </Route>
+
+                {/* =========================================================
+                    Rota não encontrada
+                ========================================================= */}
 
                 <Route
                     path="*"

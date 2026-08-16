@@ -5,12 +5,14 @@
  * - Exibir conteúdo sobreposto.
  * - Fechar ao clicar no botão "X".
  * - Fechar ao clicar fora do conteúdo.
+ * - Fechar ao pressionar ESC.
  * - Bloquear o scroll da página enquanto estiver aberto.
  * - Permitir qualquer conteúdo através de children.
  */
 
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+
 import styles from "./Modal.module.css";
 
 export default function Modal({
@@ -21,22 +23,28 @@ export default function Modal({
     width = "600px",
 }) {
     useEffect(() => {
-        if (!isOpen) return undefined;
+        if (!isOpen) {
+            return undefined;
+        }
 
         const originalOverflow = document.body.style.overflow;
+
         document.body.style.overflow = "hidden";
 
-        const handleKeyDown = (event) => {
+        function handleKeyDown(event) {
             if (event.key === "Escape") {
                 onClose();
             }
-        };
+        }
 
         window.addEventListener("keydown", handleKeyDown);
 
         return () => {
             document.body.style.overflow = originalOverflow;
-            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener(
+                "keydown",
+                handleKeyDown,
+            );
         };
     }, [isOpen, onClose]);
 
@@ -48,14 +56,20 @@ export default function Modal({
         <div
             className={styles.overlay}
             onClick={onClose}
+            role="presentation"
         >
             <div
                 className={styles.modal}
                 style={{ maxWidth: width }}
                 onClick={(event) => event.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
             >
                 <header className={styles.header}>
-                    <h2>{title}</h2>
+                    <h2 id="modal-title">
+                        {title}
+                    </h2>
 
                     <button
                         type="button"

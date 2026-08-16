@@ -4,14 +4,17 @@
  * Responsabilidades:
  * - Cadastrar usuários.
  * - Editar usuários.
- * - Validar o formulário.
- * - Reutilizar o Modal genérico.
+ * - Reutilizar os componentes de UI.
  */
 
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal/Modal";
+
+import styles from "./UserModal.module.css";
 
 const INITIAL_FORM = {
     nome: "",
@@ -22,17 +25,34 @@ const INITIAL_FORM = {
     ativo: true,
 };
 
-export default function UserModal({
+function buildPayload(form, isEditing) {
+    return {
+        nome: form.nome.trim(),
+        email: form.email.trim(),
+        telefone: form.telefone.trim() || null,
+        matricula: form.matricula.trim() || null,
+        ...(isEditing
+            ? {
+                  ativo: form.ativo,
+              }
+            : {
+                  senha: form.senha,
+              }),
+    };
+}
+
+function UserModal({
     isOpen,
     onClose,
     onSave,
     user,
-    loading = false,
+    loading,
 }) {
     const [form, setForm] = useState(INITIAL_FORM);
 
     useEffect(() => {
         if (!isOpen) {
+            setForm(INITIAL_FORM);
             return;
         }
 
@@ -53,154 +73,139 @@ export default function UserModal({
     }, [isOpen, user]);
 
     function handleChange(event) {
-        const { name, value, type, checked } = event.target;
+        const {
+            name,
+            value,
+            type,
+            checked,
+        } = event.target;
 
         setForm((previous) => ({
             ...previous,
-            [name]: type === "checkbox" ? checked : value,
+            [name]:
+                type === "checkbox"
+                    ? checked
+                    : value,
         }));
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
 
-        const payload = user
-            ? {
-                  nome: form.nome,
-                  email: form.email,
-                  telefone: form.telefone || null,
-                  matricula: form.matricula || null,
-                  ativo: form.ativo,
-              }
-            : {
-                  nome: form.nome,
-                  email: form.email,
-                  telefone: form.telefone || null,
-                  matricula: form.matricula || null,
-                  senha: form.senha,
-              };
-
-        onSave(payload);
+        await onSave(
+            buildPayload(
+                form,
+                Boolean(user),
+            ),
+        );
     }
 
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            title={user ? "Editar Usuário" : "Novo Usuário"}
-            width="650px"
+            title={
+                user
+                    ? "Editar Usuário"
+                    : "Novo Usuário"
+            }
+            width="720px"
         >
-            <form onSubmit={handleSubmit}>
+            <form
+                className={styles.form}
+                onSubmit={handleSubmit}
+            >
+                <Input
+                    id="nome"
+                    name="nome"
+                    label="Nome"
+                    value={form.nome}
+                    onChange={handleChange}
+                    required
+                    autoFocus
+                    autoComplete="name"
+                    minLength={3}
+                    maxLength={100}
+                />
 
-                <div className="form-group">
-                    <label htmlFor="nome">Nome</label>
+                <Input
+                    id="email"
+                    name="email"
+                    label="E-mail"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    autoComplete="email"
+                />
 
-                    <input
-                        id="nome"
-                        name="nome"
-                        type="text"
-                        value={form.nome}
-                        onChange={handleChange}
-                        required
-                        minLength={3}
-                    />
-                </div>
+                <Input
+                    id="telefone"
+                    name="telefone"
+                    label="Telefone"
+                    value={form.telefone}
+                    onChange={handleChange}
+                    placeholder="(11) 99999-8888"
+                    autoComplete="tel"
+                />
 
-                <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="telefone">Telefone</label>
-
-                    <input
-                        id="telefone"
-                        name="telefone"
-                        type="text"
-                        value={form.telefone}
-                        onChange={handleChange}
-                        placeholder="11999998888"
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="matricula">Matrícula</label>
-
-                    <input
-                        id="matricula"
-                        name="matricula"
-                        type="text"
-                        value={form.matricula}
-                        onChange={handleChange}
-                    />
-                </div>
+                <Input
+                    id="matricula"
+                    name="matricula"
+                    label="Matrícula"
+                    value={form.matricula}
+                    onChange={handleChange}
+                />
 
                 {!user && (
-                    <div className="form-group">
-                        <label htmlFor="senha">
-                            Senha
-                        </label>
-
-                        <input
-                            id="senha"
-                            name="senha"
-                            type="password"
-                            value={form.senha}
-                            onChange={handleChange}
-                            required
-                            minLength={6}
-                        />
-                    </div>
+                    <Input
+                        id="senha"
+                        name="senha"
+                        label="Senha"
+                        type="password"
+                        value={form.senha}
+                        onChange={handleChange}
+                        required
+                        minLength={6}
+                        placeholder="Mínimo 6 caracteres"
+                        autoComplete="new-password"
+                    />
                 )}
 
                 {user && (
-                    <div className="form-group">
-                        <label>
+                    <div className={styles.formGroup}>
+                        <label className={styles.checkbox}>
                             <input
                                 type="checkbox"
                                 name="ativo"
                                 checked={form.ativo}
                                 onChange={handleChange}
                             />
-
-                            {" "}
                             Usuário ativo
                         </label>
                     </div>
                 )}
 
-                <div className="modal-actions">
-
-                    <button
+                <div className={styles.actions}>
+                    <Button
                         type="button"
+                        variant="secondary"
                         onClick={onClose}
                         disabled={loading}
                     >
                         Cancelar
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         type="submit"
-                        disabled={loading}
+                        variant="primary"
+                        loading={loading}
                     >
-                        {loading
-                            ? "Salvando..."
-                            : user
-                                ? "Atualizar"
-                                : "Cadastrar"}
-                    </button>
-
+                        {user
+                            ? "Atualizar"
+                            : "Cadastrar"}
+                    </Button>
                 </div>
-
             </form>
         </Modal>
     );
@@ -210,11 +215,20 @@ UserModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    user: PropTypes.object,
     loading: PropTypes.bool,
+    user: PropTypes.shape({
+        id: PropTypes.number,
+        nome: PropTypes.string,
+        email: PropTypes.string,
+        telefone: PropTypes.string,
+        matricula: PropTypes.string,
+        ativo: PropTypes.bool,
+    }),
 };
 
 UserModal.defaultProps = {
-    user: null,
     loading: false,
+    user: null,
 };
+
+export default UserModal;

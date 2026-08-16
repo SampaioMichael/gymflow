@@ -15,14 +15,17 @@
     "format": "npm run lint:fix"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.7.1",
     "axios": "^1.18.1",
     "lucide-react": "^1.27.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-hook-form": "^7.84.0",
     "react-hot-toast": "^2.6.0",
     "react-modal": "^3.16.3",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
