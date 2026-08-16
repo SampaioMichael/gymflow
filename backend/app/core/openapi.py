@@ -8,7 +8,10 @@ from fastapi.openapi.utils import get_openapi
 
 def custom_openapi(app: FastAPI):
     """
-    Gera um esquema OpenAPI personalizado.
+    Gera um esquema OpenAPI personalizado para a aplicação GymFlow.
+
+    O esquema de autenticação JWT é gerado automaticamente pelo
+    OAuth2PasswordBearer definido em app.core.auth.
     """
 
     if app.openapi_schema:
@@ -46,28 +49,21 @@ def custom_openapi(app: FastAPI):
 
     openapi_schema["servers"] = [
         {
-            "url": "http://localhost:8000",
+            "url": "http://127.0.0.1:8000",
             "description": "Ambiente de Desenvolvimento",
         }
     ]
 
     # -------------------------------------------------------------------------
-    # Esquema Bearer JWT
+    # Autenticação
     # -------------------------------------------------------------------------
-
-    components = openapi_schema.setdefault("components", {})
-    security = components.setdefault("securitySchemes", {})
-
-    security["BearerAuth"] = {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "description": (
-            "Informe o token JWT.\n\n"
-            "Exemplo:\n"
-            "eyJhbGciOiJIUzI1NiIs..."
-        ),
-    }
+    #
+    # O OAuth2PasswordBearer definido em app.core.auth já registra
+    # automaticamente o esquema de autenticação no OpenAPI.
+    #
+    # Não adicionamos manualmente um BearerAuth aqui.
+    #
+    # -------------------------------------------------------------------------
 
     app.openapi_schema = openapi_schema
 

@@ -25,6 +25,7 @@ from app.core.openapi import custom_openapi
 # ============================================================================
 
 import app.models.checkin  # noqa: F401
+import app.models.equipment  # noqa: F401
 import app.models.user  # noqa: F401
 
 # ============================================================================
@@ -34,6 +35,7 @@ import app.models.user  # noqa: F401
 from app.routes.auth import router as auth_router
 from app.routes.checkins import router as checkin_router
 from app.routes.dashboard import router as dashboard_router
+from app.routes.equipments import router as equipment_router
 from app.routes.health import router as health_router
 from app.routes.users import router as user_router
 
@@ -57,6 +59,10 @@ tags_metadata = [
     {
         "name": "Usuários",
         "description": "Cadastro e gerenciamento de usuários.",
+    },
+    {
+        "name": "Equipamentos",
+        "description": "Cadastro e gerenciamento dos equipamentos da academia.",
     },
     {
         "name": "Check-ins",
@@ -105,6 +111,7 @@ Sistema desenvolvido em **FastAPI** para gerenciamento de academias.
 ## Funcionalidades
 
 - 👤 Cadastro de usuários
+- 🏋️ Cadastro de equipamentos
 - 🔐 Autenticação JWT
 - ✅ Check-in
 - 🚪 Check-out
@@ -191,6 +198,7 @@ routers = (
     health_router,
     auth_router,
     user_router,
+    equipment_router,
     checkin_router,
     dashboard_router,
 )
