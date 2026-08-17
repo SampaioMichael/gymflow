@@ -18,167 +18,195 @@ If you are developing a production application, we recommend using TypeScript wi
 
 # 🏋️ GymFlow
 
-Sistema web para **visualização e gerenciamento da ocupação de academias**, desenvolvido como projeto acadêmico para o **PJI240 – Projeto Integrador em Computação II**.
+Sistema web para **gerenciamento e visualização da ocupação de academias**, desenvolvido como projeto acadêmico do **PJI240 – Projeto Integrador em Computação II**.
 
-O GymFlow tem como objetivo fornecer uma solução simples para registrar a entrada e saída de usuários de uma academia e permitir a visualização da **ocupação atual do ambiente**, servindo como base para futuras funcionalidades de gestão, análise e acompanhamento de fluxo.
-
----
-
-## 📌 Sobre o Projeto
-
-O **GymFlow** é uma aplicação web desenvolvida utilizando uma arquitetura separada entre **frontend** e **backend**.
-
-A aplicação permite trabalhar com usuários, check-ins e check-outs, mantendo os dados em um banco de dados e disponibilizando informações por meio de uma API REST.
-
-### Objetivo principal
-
-Desenvolver uma aplicação web capaz de:
-
-* Cadastrar usuários;
-* Gerenciar usuários;
-* Registrar check-in;
-* Registrar check-out;
-* Identificar usuários atualmente presentes;
-* Calcular/visualizar a ocupação atual da academia;
-* Disponibilizar os dados por meio de uma API;
-* Possibilitar uma interface web para interação com o sistema;
-* Aplicar conceitos de desenvolvimento web, banco de dados, APIs, versionamento, testes e organização de software.
+O GymFlow permite gerenciar usuários, autenticar acessos, registrar movimentações de entrada e saída e disponibilizar informações relacionadas à ocupação da academia por meio de uma aplicação web integrada a uma API REST.
 
 ---
 
-# 🎓 Contexto Acadêmico
+## 🎓 Contexto Acadêmico
 
+**Projeto:** GymFlow
 **Disciplina:** PJI240 – Projeto Integrador em Computação II
-
 **Carga horária:** 80 horas
+**Finalidade:** Projeto acadêmico
 
-O projeto foi desenvolvido seguindo os requisitos acadêmicos da disciplina, envolvendo:
+O projeto foi desenvolvido com o objetivo de aplicar, de forma prática, conhecimentos relacionados a:
 
-* Desenvolvimento de software;
-* Framework web;
+* Desenvolvimento de aplicações web;
+* Desenvolvimento de APIs;
 * Banco de dados;
 * JavaScript;
-* API;
+* Frameworks web;
+* Autenticação;
+* Testes automatizados;
 * Acessibilidade;
-* Versionamento de código;
-* Testes;
-* Organização e documentação do projeto.
+* Controle de versão;
+* Trabalho colaborativo;
+* Organização de software.
 
-O GitHub é utilizado como repositório central para versionamento e colaboração entre os integrantes da equipe.
+O desenvolvimento é realizado de forma incremental e organizado em **Sprints**.
+
+---
+
+# 🎯 Objetivo do GymFlow
+
+O GymFlow foi concebido para auxiliar academias no acompanhamento de sua ocupação.
+
+A ideia central é permitir que a aplicação registre a movimentação dos usuários e utilize essas informações para determinar quantas pessoas estão atualmente presentes na academia.
+
+### Objetivos principais
+
+* Cadastrar e gerenciar usuários;
+* Permitir autenticação no sistema;
+* Registrar check-ins;
+* Registrar check-outs;
+* Identificar usuários atualmente presentes;
+* Calcular a ocupação atual;
+* Disponibilizar informações por meio de uma API REST;
+* Apresentar as informações em uma interface web;
+* Criar uma base para futuros dashboards e indicadores.
 
 ---
 
 # 🏗️ Arquitetura
 
-O projeto utiliza uma arquitetura dividida em duas aplicações principais:
+O GymFlow possui arquitetura separada entre **Frontend**, **Backend** e **Banco de Dados**.
 
 ```text
-                    ┌─────────────────────┐
-                    │       USUÁRIO       │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │      FRONTEND       │
-                    │       React         │
-                    │        Vite         │
-                    └──────────┬──────────┘
-                               │
-                          HTTP / REST
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │       BACKEND       │
-                    │       FastAPI       │
-                    │      Python         │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │      DATABASE       │
-                    │       SQLite        │
-                    └─────────────────────┘
+                         ┌───────────────────┐
+                         │      USUÁRIO      │
+                         └─────────┬─────────┘
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │     FRONTEND      │
+                         │ React + Vite      │
+                         └─────────┬─────────┘
+                                   │
+                              HTTP / REST
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │      BACKEND      │
+                         │ FastAPI + Python  │
+                         └─────────┬─────────┘
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │    SQLAlchemy     │
+                         │       ORM         │
+                         └─────────┬─────────┘
+                                   │
+                                   ▼
+                         ┌───────────────────┐
+                         │      SQLite       │
+                         │     Database      │
+                         └───────────────────┘
 ```
 
 ---
 
-# 🧰 Tecnologias Utilizadas
+# 🧰 Stack Tecnológica
 
 ## Backend
 
-| Tecnologia       | Utilização                               |
-| ---------------- | ---------------------------------------- |
-| Python           | Linguagem principal do backend           |
-| FastAPI          | Framework para construção da API         |
-| Uvicorn          | Servidor ASGI para execução da aplicação |
-| SQLAlchemy       | ORM para comunicação com o banco         |
-| SQLite           | Banco de dados utilizado atualmente      |
-| Pydantic         | Validação e serialização de dados        |
-| JWT              | Autenticação baseada em tokens           |
-| Passlib / bcrypt | Hash e segurança de senhas               |
-| Python Multipart | Suporte a envio/formulários              |
-
-### Versão do Python
-
-```text
-Python 3.14.3
-```
-
-> O projeto foi desenvolvido e testado utilizando Python 3.14.3.
+| Tecnologia        |  Versão | Finalidade                  |
+| ----------------- | ------: | --------------------------- |
+| Python            |  3.14.3 | Linguagem principal         |
+| FastAPI           | 0.136.3 | Framework da API            |
+| Uvicorn           |  0.49.0 | Servidor ASGI               |
+| SQLAlchemy        |  2.0.50 | ORM / acesso ao banco       |
+| python-dotenv     |   1.2.2 | Variáveis de ambiente       |
+| pydantic-settings |  2.12.0 | Configurações da aplicação  |
+| python-jose       |   3.5.0 | JWT                         |
+| Passlib           |   1.7.4 | Hash de senhas              |
+| bcrypt            |   4.0.1 | Criptografia/hash de senhas |
+| pytest            |   8.4.2 | Testes automatizados        |
+| pytest-cov        |   7.0.0 | Cobertura de testes         |
+| httpx             |  0.28.1 | Testes HTTP                 |
 
 ---
 
-# 💻 Frontend
+## Frontend
 
-| Tecnologia        | Utilização                              |
-| ----------------- | --------------------------------------- |
-| JavaScript        | Linguagem principal                     |
-| React             | Biblioteca para construção da interface |
-| Vite              | Ferramenta de build e desenvolvimento   |
-| Axios             | Comunicação HTTP com a API              |
-| CSS / CSS Modules | Estilização da aplicação                |
+| Tecnologia          | Versão | Finalidade                       |
+| ------------------- | -----: | -------------------------------- |
+| React               | 19.2.7 | Interface da aplicação           |
+| React DOM           | 19.2.7 | Renderização React               |
+| Vite                |  8.1.1 | Build e desenvolvimento          |
+| Axios               | 1.18.1 | Comunicação HTTP                 |
+| React Router DOM    | 7.18.1 | Rotas                            |
+| React Hook Form     | 7.84.0 | Gerenciamento de formulários     |
+| Zod                 |  4.4.3 | Validação de dados               |
+| @hookform/resolvers |  5.7.1 | Integração React Hook Form + Zod |
+| React Hot Toast     |  2.6.0 | Notificações                     |
+| React Modal         | 3.16.3 | Modais                           |
+| Lucide React        | 1.27.0 | Ícones                           |
+| Prop Types          | 15.8.1 | Validação de propriedades        |
 
-O frontend é executado durante o desenvolvimento utilizando o servidor do Vite.
+---
 
-```text
-http://localhost:5173
-```
+## Ferramentas de desenvolvimento
+
+| Ferramenta         | Finalidade                             |
+| ------------------ | -------------------------------------- |
+| Git                | Controle de versão                     |
+| GitHub             | Repositório remoto e colaboração       |
+| Git Bash           | Terminal                               |
+| Visual Studio Code | Desenvolvimento                        |
+| npm                | Gerenciamento de dependências          |
+| ESLint             | Análise estática e qualidade do código |
+| Swagger / OpenAPI  | Documentação e testes da API           |
 
 ---
 
 # 🗄️ Banco de Dados
 
-O GymFlow utiliza atualmente:
+O banco utilizado atualmente é:
 
 ```text
 SQLite
 ```
 
-O banco é armazenado localmente no backend:
+A aplicação utiliza **SQLAlchemy** como ORM.
+
+Durante o desenvolvimento local, o banco principal é:
 
 ```text
 backend/gymflow.db
 ```
 
-A comunicação com o banco é realizada utilizando:
+Existe também um banco utilizado pelos testes:
 
 ```text
-SQLAlchemy
+backend/test_gymflow.db
 ```
 
-A escolha do SQLite neste momento está relacionada à simplicidade de configuração para o projeto acadêmico e desenvolvimento local.
+Arquivos de banco de dados não devem ser versionados no Git.
+
+O `.gitignore` já contém:
+
+```text
+*.db
+*.sqlite3
+```
 
 ---
 
 # 🔐 Autenticação
 
-O sistema possui estrutura de autenticação utilizando:
+O sistema utiliza autenticação baseada em **JWT (JSON Web Token)**.
+
+Tecnologias relacionadas:
 
 ```text
-JWT
+python-jose
+Passlib
+bcrypt
 ```
 
-O fluxo de autenticação segue o conceito:
+Fluxo conceitual:
 
 ```text
 Usuário
@@ -187,13 +215,13 @@ Usuário
 Login
    │
    ▼
-Backend
+FastAPI
    │
    ▼
 Validação das credenciais
    │
    ▼
-JWT Token
+JWT
    │
    ▼
 Frontend
@@ -204,149 +232,272 @@ Requisições autenticadas
 
 As senhas não devem ser armazenadas em texto puro.
 
-O projeto utiliza mecanismos de hash para armazenamento seguro das credenciais.
-
 ---
 
 # 🔌 API
 
-O backend é desenvolvido utilizando **FastAPI**.
+O backend utiliza **FastAPI** para disponibilizar uma API REST.
 
-Durante o desenvolvimento, a API é executada em:
+Durante o desenvolvimento local:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-A documentação automática do FastAPI está disponível em:
+## Documentação Swagger
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-A especificação OpenAPI está disponível em:
+## OpenAPI
 
 ```text
 http://127.0.0.1:8000/openapi.json
 ```
 
-A documentação Swagger pode ser utilizada pelos integrantes da equipe para testar os endpoints sem precisar utilizar o frontend.
+A documentação automática permite consultar e testar os endpoints diretamente pelo navegador.
 
 ---
 
-# 📚 Principais recursos da API
+# ⚛️ Frontend
 
-O projeto possui recursos relacionados a:
+O frontend foi desenvolvido utilizando:
 
-### Usuários
+```text
+React
++
+Vite
+```
 
-* Cadastro;
-* Consulta;
-* Atualização;
-* Exclusão;
-* Autenticação.
+Durante o desenvolvimento, o Vite disponibiliza a aplicação normalmente em:
 
-### Check-in
+```text
+http://localhost:5173
+```
 
-Registro da entrada de um usuário na academia.
+O frontend utiliza Axios para comunicação com a API.
 
-### Check-out
+```text
+React
+   │
+   ▼
+Axios
+   │
+   ▼
+FastAPI
+   │
+   ▼
+SQLite
+```
 
-Registro da saída de um usuário.
+---
 
-### Ocupação
+# 📝 Formulários e Validação
 
-A partir dos registros de entrada e saída, o sistema consegue identificar os usuários que estão atualmente dentro da academia e calcular a ocupação atual.
+O projeto utiliza:
+
+```text
+React Hook Form
+Zod
+@hookform/resolvers
+```
+
+Essa combinação permite estruturar os formulários e realizar validações antes do envio dos dados para a API.
+
+---
+
+# 🧭 Rotas
+
+O gerenciamento das rotas do frontend utiliza:
+
+```text
+react-router-dom
+```
+
+Isso permite separar as diferentes áreas da aplicação e controlar a navegação entre páginas.
+
+---
+
+# 🧪 Testes Automatizados
+
+O backend possui uma suíte de testes automatizados utilizando:
+
+```text
+pytest
+pytest-cov
+httpx
+```
+
+Atualmente existem testes relacionados a diferentes componentes da aplicação.
+
+### Categorias de testes existentes
+
+```text
+tests/
+├── test_auth.py
+├── test_checkins.py
+├── test_core_auth.py
+├── test_dashboard.py
+├── test_database.py
+├── test_dependencies.py
+├── test_exception_handlers.py
+├── test_exceptions.py
+├── test_main.py
+├── test_models_checkin.py
+├── test_models_user.py
+├── test_openapi.py
+├── test_user_crud.py
+├── test_user_service.py
+└── test_users.py
+```
+
+Os testes abrangem aspectos como:
+
+* Autenticação;
+* Check-ins;
+* Dashboard;
+* Banco de dados;
+* Dependências;
+* Tratamento de exceções;
+* Models;
+* OpenAPI;
+* CRUD de usuários;
+* Serviços;
+* Endpoints de usuários.
+
+---
+
+# ▶️ Executando os testes
+
+Entre na pasta backend:
+
+```bash
+cd backend
+```
+
+Ative o ambiente virtual:
+
+```bash
+source venv/Scripts/activate
+```
+
+Execute:
+
+```bash
+pytest
+```
+
+Para visualizar a cobertura:
+
+```bash
+pytest --cov=app
+```
+
+---
+
+# 📊 Cobertura de testes
+
+O projeto utiliza:
+
+```text
+pytest-cov
+```
+
+para acompanhar a cobertura do código.
+
+A cobertura pode ser utilizada como indicador auxiliar da qualidade do backend e deve evoluir conforme novas funcionalidades forem implementadas.
 
 ---
 
 # 📁 Estrutura do Projeto
 
-O repositório está dividido em duas aplicações:
+A estrutura principal atual é:
 
 ```text
 gymflow/
 │
+├── .git/
+├── .gitignore
+├── README.md
+│
+├── assert
+│
+├── docs/
+│
 ├── backend/
 │   │
 │   ├── app/
-│   │   ├── core/
-│   │   │   └── database.py
-│   │   │
-│   │   ├── models/
-│   │   │   ├── user.py
-│   │   │   └── checkin.py
-│   │   │
-│   │   ├── routers/
-│   │   │   ├── auth.py
-│   │   │   └── ...
-│   │   │
 │   │   └── main.py
 │   │
-│   ├── gymflow.db
+│   ├── logs/
+│   │   └── gymflow.log
+│   │
+│   ├── tests/
+│   │   ├── __init__.py
+│   │   ├── conftest.py
+│   │   ├── test_auth.py
+│   │   ├── test_checkins.py
+│   │   ├── test_core_auth.py
+│   │   ├── test_dashboard.py
+│   │   ├── test_database.py
+│   │   ├── test_dependencies.py
+│   │   ├── test_exception_handlers.py
+│   │   ├── test_exceptions.py
+│   │   ├── test_main.py
+│   │   ├── test_models_checkin.py
+│   │   ├── test_models_user.py
+│   │   ├── test_openapi.py
+│   │   ├── test_user_crud.py
+│   │   ├── test_user_service.py
+│   │   └── test_users.py
+│   │
+│   ├── .env.example
 │   ├── requirements.txt
 │   └── ...
 │
-├── frontend/
-│   │
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── contexts/
-│   │   └── ...
-│   │
-│   ├── package.json
-│   ├── vite.config.js
-│   └── ...
-│
-├── .gitignore
-└── README.md
+└── frontend/
+    │
+    ├── public/
+    ├── src/
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
+    ├── vite.config.js
+    ├── eslint.config.js
+    └── ...
 ```
 
-> A estrutura pode evoluir durante as próximas Sprints. O README deve ser atualizado sempre que houver mudanças estruturais relevantes.
+> A estrutura pode evoluir durante as próximas Sprints.
 
 ---
 
-# ⚙️ Pré-requisitos
+# ⚙️ Requisitos para desenvolvimento
 
-Para trabalhar no projeto, é necessário instalar:
+Para clonar e executar o projeto, recomenda-se ter instalado:
 
 * Git;
 * Python 3.14.3;
 * Node.js;
 * npm;
-* Editor de código, preferencialmente VS Code.
+* Visual Studio Code ou outro editor de código.
 
-Recomenda-se utilizar:
-
-```text
-Git Bash
-```
-
-para os comandos Git e execução dos comandos utilizados no desenvolvimento.
+A versão do Node.js utilizada pela equipe deve ser registrada posteriormente para garantir maior padronização entre os ambientes.
 
 ---
 
-# 📥 Clonando o Projeto
+# 📥 Clonando o projeto
 
-Primeiro, clone o repositório:
+Clone o repositório:
 
 ```bash
 git clone <URL_DO_REPOSITORIO>
 ```
 
-Entre no diretório:
+Entre na pasta:
 
 ```bash
 cd gymflow
-```
-
-O projeto possui dois ambientes independentes:
-
-```text
-backend/
-frontend/
 ```
 
 ---
@@ -362,26 +513,42 @@ cd backend
 Crie um ambiente virtual:
 
 ```bash
-python -m venv .venv
+python -m venv venv
 ```
 
 Ative o ambiente virtual no Git Bash:
 
 ```bash
-source .venv/Scripts/activate
+source venv/Scripts/activate
 ```
 
-No Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Depois, instale as dependências:
+Instale as dependências:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+# 🔐 Configurando as variáveis de ambiente
+
+O projeto utiliza variáveis de ambiente.
+
+Existe um arquivo de referência:
+
+```text
+backend/.env.example
+```
+
+Crie seu arquivo local:
+
+```text
+backend/.env
+```
+
+Não publique o `.env` no GitHub.
+
+O arquivo `.env` já está protegido pelo `.gitignore`.
 
 ---
 
@@ -393,13 +560,13 @@ Com o ambiente virtual ativado:
 uvicorn app.main:app --reload
 ```
 
-A API ficará disponível em:
+API:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Documentação:
+Swagger:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -417,7 +584,7 @@ http://127.0.0.1:8000/openapi.json
 
 Abra outro terminal.
 
-Entre na pasta:
+A partir da raiz do projeto:
 
 ```bash
 cd frontend
@@ -439,7 +606,7 @@ Execute:
 npm run dev
 ```
 
-O Vite disponibilizará a aplicação normalmente em:
+A aplicação estará disponível normalmente em:
 
 ```text
 http://localhost:5173
@@ -447,26 +614,69 @@ http://localhost:5173
 
 ---
 
-# 🔄 Executando o Projeto Completo
+# 🏗️ Build do Frontend
 
-Para trabalhar no GymFlow, é necessário manter os dois servidores ativos.
+Para gerar o build de produção:
 
-### Terminal 1 — Backend
+```bash
+npm run build
+```
+
+Para visualizar o build:
+
+```bash
+npm run preview
+```
+
+---
+
+# 🧹 Lint
+
+O projeto utiliza ESLint.
+
+Para executar a análise:
+
+```bash
+npm run lint
+```
+
+Para corrigir automaticamente problemas suportados pelo ESLint:
+
+```bash
+npm run lint:fix
+```
+
+Também existe o comando:
+
+```bash
+npm run format
+```
+
+que executa o processo configurado no projeto para correção/organização do código.
+
+---
+
+# 🚀 Executando o projeto completo
+
+É necessário manter **dois terminais** abertos.
+
+## Terminal 1 — Backend
 
 ```bash
 cd gymflow/backend
-source .venv/Scripts/activate
+source venv/Scripts/activate
 uvicorn app.main:app --reload
 ```
 
-### Terminal 2 — Frontend
+## Terminal 2 — Frontend
 
 ```bash
 cd gymflow/frontend
+npm install
 npm run dev
 ```
 
-Depois, acessar:
+Depois acesse:
 
 ```text
 http://localhost:5173
@@ -474,49 +684,11 @@ http://localhost:5173
 
 ---
 
-# 🔗 Comunicação Frontend → Backend
+# 🌿 Git e estratégia de branches
 
-O frontend realiza requisições HTTP para a API do FastAPI.
+O projeto utiliza Git e GitHub para controle de versão e colaboração.
 
-Fluxo:
-
-```text
-React
-  │
-  │ Axios
-  ▼
-FastAPI
-  │
-  ▼
-SQLAlchemy
-  │
-  ▼
-SQLite
-```
-
-Durante o desenvolvimento local, o backend utiliza:
-
-```text
-http://127.0.0.1:8000
-```
-
-e o frontend:
-
-```text
-http://localhost:5173
-```
-
-O backend possui configuração de CORS para permitir a comunicação com o frontend durante o desenvolvimento.
-
----
-
-# 🌿 Git e GitHub
-
-O projeto utiliza Git para controle de versão.
-
-A estratégia utilizada durante o desenvolvimento inclui branches específicas para funcionalidades.
-
-Exemplos utilizados no projeto:
+Branches utilizadas no desenvolvimento incluem:
 
 ```text
 develop
@@ -524,13 +696,9 @@ feature/checkin
 feature/frontend
 ```
 
----
+A recomendação é que cada integrante desenvolva sua tarefa em uma branch própria.
 
-# 📌 Estratégia de Branches
-
-A ideia é evitar desenvolver diretamente na branch principal.
-
-Fluxo recomendado:
+Fluxo:
 
 ```text
 develop
@@ -540,440 +708,135 @@ develop
    ├── feature/correcao
    │
    └── feature/frontend
-```
-
-Depois que a funcionalidade estiver concluída:
-
-```text
-feature
-   │
-   ▼
-Pull Request
-   │
-   ▼
-Revisão
-   │
-   ▼
-develop
+             │
+             ▼
+       Pull Request
+             │
+             ▼
+          Revisão
+             │
+             ▼
+          develop
 ```
 
 ---
 
-# 🧑‍💻 Fluxo para novos colaboradores
+# 👥 Como contribuir
 
-Depois de clonar o projeto:
-
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd gymflow
-```
-
-Atualize as referências:
-
-```bash
-git fetch --all
-```
-
-Entre na branch de desenvolvimento:
+## 1. Atualizar a branch de desenvolvimento
 
 ```bash
 git checkout develop
-```
-
-Atualize:
-
-```bash
 git pull origin develop
 ```
 
-Crie uma branch para sua tarefa:
+## 2. Criar sua branch
+
+Exemplo:
 
 ```bash
-git checkout -b feature/nome-da-funcionalidade
+git checkout -b feature/dashboard-ocupacao
 ```
 
-Após desenvolver:
+## 3. Desenvolver
+
+Faça as alterações necessárias.
+
+## 4. Verificar o status
 
 ```bash
 git status
 ```
 
-Adicione os arquivos:
+## 5. Adicionar arquivos
 
 ```bash
 git add .
 ```
 
-Faça o commit:
+## 6. Criar commit
 
 ```bash
-git commit -m "feat: descrição da alteração"
+git commit -m "feat: adiciona dashboard de ocupação"
 ```
 
-Envie a branch:
+## 7. Enviar a branch
 
 ```bash
-git push origin feature/nome-da-funcionalidade
+git push origin feature/dashboard-ocupacao
 ```
 
-Depois, abra um Pull Request para `develop`.
+## 8. Criar Pull Request
+
+Abra um Pull Request direcionado para:
+
+```text
+develop
+```
+
+A alteração deve ser revisada antes do merge.
 
 ---
 
-# 📝 Convenção de Commits
+# 📝 Convenção de commits
 
-Recomenda-se utilizar mensagens de commit organizadas.
+Recomenda-se utilizar mensagens de commit padronizadas.
 
-Exemplos:
+### Nova funcionalidade
 
 ```text
 feat: adiciona tela de usuários
 ```
 
+### Correção
+
 ```text
 fix: corrige validação do login
 ```
 
-```text
-refactor: reorganiza componentes do frontend
-```
+### Documentação
 
 ```text
 docs: atualiza README
 ```
 
+### Refatoração
+
 ```text
-test: adiciona testes para usuários
+refactor: reorganiza serviço de usuários
+```
+
+### Testes
+
+```text
+test: adiciona testes para check-in
 ```
 
 ---
 
-# 🚫 Arquivos que NÃO devem ser enviados ao Git
+# 🚫 Arquivos que não devem ser versionados
 
-Arquivos gerados localmente não devem ser versionados.
+O projeto possui `.gitignore` configurado para impedir o versionamento de arquivos gerados localmente ou que possam conter informações sensíveis.
 
 Entre eles:
 
 ```text
-.venv/
+venv/
 __pycache__/
-*.pyc
-node_modules/
-.env
+.pytest_cache/
+.coverage
+htmlcov/
 *.db
-```
-
-O arquivo `.gitignore` deve impedir que esses arquivos sejam enviados acidentalmente para o repositório.
-
----
-
-# 🔑 Variáveis de Ambiente
-
-Informações sensíveis nunca devem ser armazenadas diretamente no código.
-
-Caso sejam necessárias variáveis de ambiente, utilizar:
-
-```text
+*.sqlite3
 .env
+node_modules/
+dist/
+.vscode/
+.idea/
+*.log
 ```
 
-Exemplo:
-
-```env
-SECRET_KEY=chave-local
-DATABASE_URL=sqlite:///./gymflow.db
-```
-
-O arquivo `.env` não deve ser enviado ao GitHub.
-
-Deve ser disponibilizado um arquivo de referência:
-
-```text
-.env.example
-```
-
-Exemplo:
-
-```env
-SECRET_KEY=
-DATABASE_URL=
-```
-
----
-
-# 🧪 Testes
-
-Os testes fazem parte dos requisitos do projeto.
-
-A estratégia de testes deve contemplar, progressivamente:
-
-* Testes dos endpoints;
-* Testes de autenticação;
-* Testes de cadastro de usuários;
-* Testes de check-in;
-* Testes de check-out;
-* Testes da regra de ocupação;
-* Testes de integração entre frontend e backend;
-* Testes de interface quando aplicável.
-
----
-
-# 📊 Regra principal de ocupação
-
-A ocupação atual da academia é baseada na relação entre entrada e saída dos usuários.
-
-Conceitualmente:
-
-```text
-Check-in registrado
-        │
-        ▼
-Usuário presente
-        │
-        │
-        ├──── Check-out ────► Usuário não está mais presente
-        │
-        ▼
-Ocupação atual
-```
-
-A aplicação deve considerar como ocupados os usuários que realizaram check-in e ainda não possuem um check-out correspondente.
-
----
-
-# 🎯 Funcionalidades
-
-## Implementadas
-
-O projeto já possui a base funcional para:
-
-* [x] Estrutura inicial do backend;
-* [x] Estrutura inicial do frontend;
-* [x] API FastAPI;
-* [x] Banco SQLite;
-* [x] SQLAlchemy;
-* [x] Modelo de usuário;
-* [x] Modelo de check-in;
-* [x] Cadastro/gerenciamento de usuários;
-* [x] Autenticação;
-* [x] JWT;
-* [x] Interface React;
-* [x] Comunicação frontend/backend;
-* [x] Estrutura de componentes;
-* [x] Modal de usuários;
-* [x] Controle de versão com Git;
-* [x] Organização por branches;
-* [x] Documentação automática da API.
-
-## Em evolução
-
-* [ ] Aprimoramento do fluxo de check-in;
-* [ ] Aprimoramento do fluxo de check-out;
-* [ ] Dashboard de ocupação;
-* [ ] Indicadores de ocupação;
-* [ ] Melhorias de UX/UI;
-* [ ] Testes automatizados;
-* [ ] Melhorias de acessibilidade;
-* [ ] Refinamentos de segurança;
-* [ ] Melhorias de documentação.
-
----
-
-# 🏃 Sprints
-
-O desenvolvimento está organizado em Sprints.
-
-Até o momento, o projeto chegou ao:
-
-```text
-Sprint 4.3
-```
-
-O próximo ponto de planejamento é:
-
-```text
-Sprint 4.4
-```
-
-### Checkpoint atual
-
-```text
-✅ Sprint 4.3 concluída
-➡️ Próximo passo: planejamento da Sprint 4.4
-```
-
-As próximas alterações devem respeitar o estado atual do projeto para evitar retrabalho ou quebra das funcionalidades já implementadas.
-
----
-
-# 🛠️ Ferramentas de Desenvolvimento
-
-As principais ferramentas utilizadas no projeto são:
-
-| Ferramenta         | Finalidade                     |
-| ------------------ | ------------------------------ |
-| Visual Studio Code | Desenvolvimento                |
-| Git                | Controle de versão             |
-| GitHub             | Repositório e colaboração      |
-| Git Bash           | Terminal e comandos Git        |
-| Python             | Backend                        |
-| FastAPI            | API                            |
-| Uvicorn            | Servidor                       |
-| React              | Frontend                       |
-| Vite               | Desenvolvimento/build frontend |
-| npm                | Gerenciamento de dependências  |
-| SQLite             | Banco de dados                 |
-| SQLAlchemy         | ORM                            |
-| Swagger/OpenAPI    | Testes e documentação da API   |
-
----
-
-# 📦 Dependências do Backend
-
-As dependências do backend são controladas pelo arquivo:
-
-```text
-backend/requirements.txt
-```
-
-A instalação deve ser feita com:
-
-```bash
-pip install -r requirements.txt
-```
-
-O arquivo `requirements.txt` é a referência oficial das dependências Python do projeto.
-
----
-
-# 📦 Dependências do Frontend
-
-As dependências do frontend são controladas pelo:
-
-```text
-frontend/package.json
-```
-
-Para instalar:
-
-```bash
-npm install
-```
-
-Para executar:
-
-```bash
-npm run dev
-```
-
----
-
-# 🧭 Organização do Desenvolvimento
-
-O projeto utiliza uma abordagem incremental.
-
-Cada Sprint deve seguir, preferencialmente, o fluxo:
-
-```text
-Planejamento
-     │
-     ▼
-Desenvolvimento
-     │
-     ▼
-Testes
-     │
-     ▼
-Validação
-     │
-     ▼
-Pull Request
-     │
-     ▼
-Merge
-     │
-     ▼
-Próxima Sprint
-```
-
----
-
-# 🤝 Contribuindo
-
-Para contribuir:
-
-1. Clone o repositório;
-2. Configure o backend;
-3. Configure o frontend;
-4. Execute o projeto;
-5. Atualize sua branch;
-6. Crie uma branch de funcionalidade;
-7. Desenvolva sua tarefa;
-8. Teste;
-9. Faça commit;
-10. Envie a branch;
-11. Abra um Pull Request;
-12. Aguarde a revisão.
-
-### Não desenvolver diretamente em `develop`
-
-Sempre que possível, utilize uma branch específica para sua tarefa.
-
-Exemplo:
-
-```bash
-git checkout develop
-git pull origin develop
-git checkout -b feature/dashboard-ocupacao
-```
-
----
-
-# 🐛 Reportando problemas
-
-Ao encontrar um problema, procure informar:
-
-```text
-Título:
-Descrição:
-Passos para reproduzir:
-Resultado esperado:
-Resultado obtido:
-Ambiente:
-Backend/Frontend:
-Mensagem de erro:
-```
-
-Exemplo:
-
-```text
-Título:
-Erro ao realizar check-in
-
-Descrição:
-Usuário não consegue realizar check-in.
-
-Passos:
-1. Fazer login;
-2. Acessar usuários;
-3. Selecionar usuário;
-4. Clicar em check-in.
-
-Resultado esperado:
-Check-in registrado.
-
-Resultado obtido:
-Erro HTTP 500.
-
-Ambiente:
-Windows / Python 3.14.3 / Backend local
-```
-
----
-
-# 🔒 Segurança
-
-Nunca publicar no GitHub:
+Nunca faça commit de:
 
 * Senhas;
 * Tokens;
@@ -981,85 +844,59 @@ Nunca publicar no GitHub:
 * Credenciais;
 * Arquivos `.env`;
 * Dados pessoais reais;
-* Informações de acesso a serviços externos.
-
-Para desenvolvimento, utilizar dados fictícios sempre que possível.
+* Banco de dados local;
+* `node_modules`;
+* Ambientes virtuais.
 
 ---
 
-# 📈 Evolução futura
+# 🔒 Segurança
 
-O GymFlow foi estruturado de forma que novas funcionalidades possam ser adicionadas posteriormente.
+Informações sensíveis devem permanecer fora do código-fonte.
 
-Possíveis evoluções:
+Utilize:
 
 ```text
-                    GymFlow
-                       │
-       ┌───────────────┼────────────────┐
-       ▼               ▼                ▼
-   Usuários        Ocupação          Dashboard
-       │               │                │
-       ▼               ▼                ▼
-  Check-in        Indicadores       Relatórios
-  Check-out       Histórico         Analytics
-       │               │                │
-       └───────────────┼────────────────┘
-                       ▼
-                 Gestão da Academia
+.env
 ```
 
-Entre as possibilidades futuras estão:
+para configurações locais.
 
-* Dashboard em tempo real;
-* Histórico de ocupação;
-* Gráficos;
-* Horários de maior movimento;
-* Limite de capacidade;
-* Alertas de lotação;
-* Relatórios;
-* Perfis e permissões;
-* Integração com outros sistemas;
-* Banco de dados em ambiente de produção;
-* Deploy em nuvem.
+Utilize:
 
----
+```text
+.env.example
+```
 
-# 🧑‍🤝‍🧑 Trabalho em Equipe
+para documentar quais variáveis são necessárias.
 
-O GymFlow é um projeto colaborativo.
+O `.env.example` pode ser versionado.
 
-Para manter o projeto organizado, todos os integrantes devem:
-
-* Manter suas branches atualizadas;
-* Evitar alterações desnecessárias;
-* Não sobrescrever código de outros integrantes;
-* Criar commits objetivos;
-* Testar antes de abrir Pull Request;
-* Documentar alterações relevantes;
-* Respeitar a arquitetura existente;
-* Comunicar alterações estruturais;
-* Revisar Pull Requests dos colegas.
+O `.env` não deve ser versionado.
 
 ---
 
-# 📋 Checklist para novo colaborador
+# 📋 Checklist para novos colaboradores
 
 * [ ] Instalar Git;
 * [ ] Instalar Python 3.14.3;
 * [ ] Instalar Node.js;
+* [ ] Instalar npm;
 * [ ] Clonar o repositório;
-* [ ] Configurar ambiente virtual Python;
+* [ ] Entrar na pasta `gymflow`;
+* [ ] Configurar o ambiente virtual do backend;
 * [ ] Instalar `requirements.txt`;
+* [ ] Configurar `backend/.env`;
 * [ ] Instalar dependências do frontend;
 * [ ] Executar backend;
 * [ ] Executar frontend;
-* [ ] Acessar aplicação;
+* [ ] Acessar a aplicação;
 * [ ] Acessar `/docs`;
-* [ ] Confirmar comunicação frontend/backend;
-* [ ] Atualizar branch `develop`;
+* [ ] Executar os testes;
+* [ ] Executar o lint;
+* [ ] Atualizar `develop`;
 * [ ] Criar branch própria;
-* [ ] Fazer primeira alteração;
+* [ ] Desenvolver;
 * [ ] Testar;
 * [ ] Criar commit;
 * [ ] Enviar branch;
@@ -1067,92 +904,186 @@ Para manter o projeto organizado, todos os integrantes devem:
 
 ---
 
-# 🚀 Quick Start
-
-Para quem já possui Git, Python, Node.js e npm instalados:
-
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd gymflow
-```
-
-### Backend
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/Scripts/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-### Frontend
-
-Em outro terminal:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Acesse:
+# 🧪 Checklist antes de abrir Pull Request
 
 ```text
-http://localhost:5173
+Backend
 ```
 
-API:
+* [ ] API inicia corretamente;
+* [ ] Testes executados;
+* [ ] Testes passando;
+* [ ] Nenhuma credencial foi adicionada;
+* [ ] Logs de debug desnecessários removidos.
 
 ```text
-http://127.0.0.1:8000
+Frontend
 ```
 
-Swagger:
+* [ ] Aplicação inicia;
+* [ ] `npm run lint` executado;
+* [ ] Build executado;
+* [ ] Funcionalidade testada;
+* [ ] Console sem erros desnecessários.
 
 ```text
-http://127.0.0.1:8000/docs
+Git
 ```
+
+* [ ] Branch atualizada;
+* [ ] Commit organizado;
+* [ ] Nenhum arquivo sensível incluído;
+* [ ] Pull Request criado para `develop`.
 
 ---
 
-# 📌 Estado atual do projeto
+# 📊 Fluxo de ocupação
+
+A regra principal do GymFlow utiliza os registros de entrada e saída dos usuários.
+
+Conceitualmente:
+
+```text
+                 CHECK-IN
+                    │
+                    ▼
+            ┌───────────────┐
+            │ Usuário ativo │
+            └───────┬───────┘
+                    │
+                    │
+              CHECK-OUT
+                    │
+                    ▼
+            ┌───────────────┐
+            │ Usuário saiu  │
+            └───────────────┘
+```
+
+A ocupação representa os usuários que possuem entrada registrada e ainda não possuem saída correspondente.
+
+---
+
+# 📈 Possíveis evoluções
+
+A arquitetura atual permite evolução futura para funcionalidades como:
+
+* Dashboard de ocupação;
+* Histórico de ocupação;
+* Gráficos;
+* Indicadores;
+* Horários de maior movimento;
+* Controle de capacidade;
+* Alertas de lotação;
+* Relatórios;
+* Perfis e permissões;
+* Gestão de academias;
+* Persistência em banco de produção;
+* Deploy em nuvem;
+* Integração com outros serviços.
+
+---
+
+# 🏃 Sprints
+
+O desenvolvimento do GymFlow é organizado em Sprints.
+
+## Status atual
+
+```text
+Sprint 4.3
+    │
+    ▼
+CONCLUÍDA
+    │
+    ▼
+Sprint 4.4
+    │
+    ▼
+PRÓXIMA ETAPA
+```
+
+O projeto deve continuar sendo evoluído incrementalmente, preservando as funcionalidades já implementadas.
+
+---
+
+# 📍 Checkpoint atual
 
 ```text
 Projeto: GymFlow
-Disciplina: PJI240 – Projeto Integrador em Computação II
-Carga horária: 80h
 
-Backend: FastAPI + Python
-Frontend: React + Vite
-Banco: SQLite
-ORM: SQLAlchemy
-API: REST
-Autenticação: JWT
-Versionamento: Git + GitHub
-
-Python: 3.14.3
-Backend: porta 8000
-Frontend: porta 5173
+Disciplina:
+PJI240 – Projeto Integrador em Computação II
 
 Status:
 Sprint 4.3 concluída
-Próximo passo: Sprint 4.4
+
+Próximo checkpoint:
+Planejamento da Sprint 4.4
 ```
 
 ---
 
-# 👥 Projeto Acadêmico
+# 📦 Resumo da Stack
 
-**GymFlow**
-Projeto Integrador em Computação II — PJI240
-
-Desenvolvido para fins acadêmicos, com foco em desenvolvimento web, APIs, banco de dados, versionamento, testes, acessibilidade e trabalho colaborativo.
+```text
+GYMFLOW
+│
+├── Frontend
+│   ├── React 19.2.7
+│   ├── Vite 8.1.1
+│   ├── Axios
+│   ├── React Router
+│   ├── React Hook Form
+│   ├── Zod
+│   ├── React Modal
+│   ├── React Hot Toast
+│   └── Lucide React
+│
+├── Backend
+│   ├── Python 3.14.3
+│   ├── FastAPI 0.136.3
+│   ├── Uvicorn 0.49.0
+│   ├── SQLAlchemy 2.0.50
+│   ├── Pydantic Settings
+│   ├── python-jose
+│   ├── Passlib
+│   └── bcrypt
+│
+├── Database
+│   └── SQLite
+│
+├── Tests
+│   ├── pytest
+│   ├── pytest-cov
+│   └── httpx
+│
+├── Quality
+│   └── ESLint
+│
+└── Version Control
+    ├── Git
+    └── GitHub
+```
 
 ---
 
-## 📄 Licença
+# 👤 Autoria
 
-Projeto acadêmico desenvolvido para fins educacionais.
+**Thamyres Lima**
 
-Caso o projeto seja posteriormente publicado ou distribuído fora do ambiente acadêmico, a licença deverá ser definida pelos integrantes responsáveis pelo repositório.
+Projeto desenvolvido para fins acadêmicos no âmbito do:
+
+**PJI240 – Projeto Integrador em Computação II**
+
+---
+
+# 📄 Licença
+
+Este projeto possui licença:
+
+```text
+MIT
+```
+
+O projeto foi desenvolvido originalmente para fins acadêmicos.
